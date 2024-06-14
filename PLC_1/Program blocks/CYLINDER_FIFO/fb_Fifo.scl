@@ -1,0 +1,101 @@
+﻿FUNCTION_BLOCK "fb_Fifo"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR_INPUT 
+      INxWrite : Bool;
+      INxRead : Bool;
+   END_VAR
+
+   VAR_OUTPUT 
+      OUTbStatus : Byte;   // Status Ok - 1, Status Overflow at output - 2, Status Input Empty - 3
+   END_VAR
+
+   VAR_IN_OUT 
+      IOsFIFO_IN : Array[1..50] of "uCylinderData";
+      IOsFIFO_OUT : Array[1..50] of "uCylinderData";
+      IOiIN_Len : Int;
+      IOiOUT_Len : Int;
+      IOiNo_Items_Cpy : Int;
+   END_VAR
+
+   VAR 
+      idx1 { S7_SetPoint := 'True'} : Int;
+      idx2 { S7_SetPoint := 'True'} : Int;
+      idx3 { S7_SetPoint := 'True'} : Int;
+      idx4 : Int;
+      sEmpty { S7_SetPoint := 'False'} : "uCylinderData";
+   END_VAR
+
+
+BEGIN
+	//Initialization
+	#IOiIN_Len := 0;
+	#IOiOUT_Len := 0;
+	
+	
+	//Check Input FIFO Lengeth
+	FOR #idx1 := 1 TO 50 DO
+	    IF #IOsFIFO_IN[#idx1].rCylinderID <> 0.0 THEN
+	        #IOiIN_Len := #IOiIN_Len + 1;
+	    END_IF;
+	END_FOR;
+	
+	//Check Output FIFO Lengeth
+	FOR #idx2 := 1 TO 50 DO
+	    IF #IOsFIFO_OUT[#idx2].rCylinderID <> 0.0 THEN
+	        #IOiOUT_Len := #IOiOUT_Len + 1;
+	    END_IF;
+	END_FOR;
+	
+	
+	//Write data into output FIFO from input FIFO
+	IF #INxWrite THEN
+	    #OUTbStatus := 0; //Initialise status
+	    IF #IOiIN_Len <> 0 AND #IOiOUT_Len <= 49 THEN
+	        //Copy Data into output FIFO
+	        WHILE #IOiNo_Items_Cpy <> 0 DO
+	            #IOsFIFO_OUT[49] := #IOsFIFO_IN[1]; //Copy Data into output FIFO
+	            #IOsFIFO_IN[1] := #sEmpty; //Delete Copied data in input FIFO
+	            //Compress Input FIFO
+	            FOR #idx4 := 1 TO 50 - 1 DO
+	                IF #idx4 <= 0 THEN
+	                    EXIT;
+	                END_IF;
+	                // Shift down FiFo by one
+	                IF #IOsFIFO_OUT[#idx4].rCylinderID = 0.0 AND
+	                    #IOsFIFO_OUT[#idx4 + 1].rCylinderID <> 0.0 THEN
+	                    #IOsFIFO_OUT[#idx4] := #IOsFIFO_OUT[#idx4 + 1];
+	                    #IOsFIFO_OUT[#idx4 + 1] := #sEmpty;
+	                END_IF;
+	            END_FOR;
+	            //Compress Output FIFO
+	            FOR #idx3 := 1 TO 50 - 1 DO
+	                IF #idx3 <= 0 THEN
+	                    EXIT;
+	                END_IF;
+	                // Shift down FiFo by one
+	                IF #IOsFIFO_IN[#idx3].rCylinderID = 0.0 AND
+	                    #IOsFIFO_IN[#idx3 + 1].rCylinderID <> 0.0 THEN
+	                    #IOsFIFO_IN[#idx3] := #IOsFIFO_IN[#idx3 + 1];
+	                    #IOsFIFO_IN[#idx3 + 1] := #sEmpty;
+	                END_IF;
+	            END_FOR;
+	            #IOiNo_Items_Cpy := #IOiNo_Items_Cpy - 1; //Move to Next Item in the FIFO
+	        END_WHILE;
+	        #OUTbStatus := 1;
+	    ELSIF #IOiIN_Len = 0 THEN
+	        #OUTbStatus := 3;
+	    ELSIF #IOiOUT_Len > 49 THEN
+	        #OUTbStatus := 2;
+	    END_IF;
+	END_IF;
+	
+	
+	
+	
+	
+	
+	
+	
+END_FUNCTION_BLOCK
+

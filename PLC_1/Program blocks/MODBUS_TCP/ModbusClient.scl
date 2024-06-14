@@ -1,0 +1,44 @@
+﻿FUNCTION_BLOCK "ModbusClient"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR_INPUT 
+      request : Bool;
+      disconnect : Bool;
+      modbusMode : USInt;
+      modbusDataAddress : UDInt;
+      modbusDataLen : UInt;
+   END_VAR
+
+   VAR_OUTPUT 
+      done : Bool;
+      busy : Bool;
+      error : Bool;
+      status : Word;
+   END_VAR
+
+   VAR_IN_OUT 
+      connectParamClient : Variant;
+      dataBuffer : Variant;
+   END_VAR
+
+   VAR 
+      instModbusClient {InstructionName := 'MB_CLIENT'; LibVersion := '5.1'} : MB_CLIENT;
+   END_VAR
+
+
+BEGIN
+	
+	#instModbusClient(REQ:=#request,
+	                  DISCONNECT:=#disconnect,
+	                  MB_MODE:=#modbusMode,
+	                  MB_DATA_ADDR:=#modbusDataAddress,
+	                  MB_DATA_LEN:=#modbusDataLen,
+	                  DONE=>#done,
+	                  BUSY=>#busy,
+	                  ERROR=>#error,
+	                  STATUS=>#status,
+	                  MB_DATA_PTR:=#dataBuffer,
+	                  CONNECT:=#connectParamClient);
+	
+END_FUNCTION_BLOCK
+

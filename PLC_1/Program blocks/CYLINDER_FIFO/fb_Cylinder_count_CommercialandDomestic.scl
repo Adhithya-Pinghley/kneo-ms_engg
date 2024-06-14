@@ -1,0 +1,34 @@
+﻿FUNCTION_BLOCK "fb_Cylinder_count_CommercialandDomestic"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR_IN_OUT 
+      IOsFIFO_IN : Array[1..100] of "uCylinderData";
+      IOiIN_Len_Commercial : Int;
+      IOiIN_Len_Domestic : Int;
+   END_VAR
+
+   VAR 
+      idx1 { S7_SetPoint := 'True'} : Int;
+   END_VAR
+
+   VAR CONSTANT 
+      Domestic_weight : Real := 18.0;
+      Commercial_Weight : Real := 18.9;
+   END_VAR
+
+
+BEGIN
+	//Initialization
+	#IOiIN_Len_Commercial := 0;
+	#IOiIN_Len_Domestic := 0;
+	
+	
+	FOR #idx1 := 1 TO 50 DO
+	    IF #IOsFIFO_IN[#idx1].rCylinderID <> 0.0 AND #IOsFIFO_IN[#idx1].rNet_weight < #Domestic_weight THEN
+	        #IOiIN_Len_Domestic := #IOiIN_Len_Domestic + 1;
+	    ELSIF #IOsFIFO_IN[#idx1].rCylinderID <> 0.0 AND #IOsFIFO_IN[#idx1].rNet_weight > #Commercial_Weight THEN
+	        #IOiIN_Len_Commercial := #IOiIN_Len_Commercial + 1;
+	    END_IF;
+	END_FOR;
+END_FUNCTION_BLOCK
+

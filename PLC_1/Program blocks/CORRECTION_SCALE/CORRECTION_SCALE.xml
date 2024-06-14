@@ -1,0 +1,625 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Document>
+  <Engineering version="V17" />
+  <DocumentInfo>
+    <Created>2024-06-14T09:53:12.016692Z</Created>
+    <ExportSetting>WithDefaults</ExportSetting>
+    <InstalledProducts>
+      <Product>
+        <DisplayName>Totally Integrated Automation Portal</DisplayName>
+        <DisplayVersion>V17</DisplayVersion>
+      </Product>
+      <OptionPackage>
+        <DisplayName>TIA Portal Openness</DisplayName>
+        <DisplayVersion>V17</DisplayVersion>
+      </OptionPackage>
+      <OptionPackage>
+        <DisplayName>TIA Portal Version Control Interface</DisplayName>
+        <DisplayVersion>V17</DisplayVersion>
+      </OptionPackage>
+      <OptionPackage>
+        <DisplayName>Simotion SCOUT TIA</DisplayName>
+        <DisplayVersion>5.4.3.0</DisplayVersion>
+      </OptionPackage>
+      <Product>
+        <DisplayName>SINAMICS Startdrive Advanced</DisplayName>
+        <DisplayVersion>V17 SP1 Update 1</DisplayVersion>
+      </Product>
+      <OptionPackage>
+        <DisplayName>SINAMICS Startdrive G110M, G120, G120C, G120D, G120P, G115D</DisplayName>
+        <DisplayVersion>V17 SP1 Update 1</DisplayVersion>
+      </OptionPackage>
+      <OptionPackage>
+        <DisplayName>SINAMICS Startdrive G130, G150, S120, S150, SINAMICS MV, S210</DisplayName>
+        <DisplayVersion>V17 SP1 Update 1</DisplayVersion>
+      </OptionPackage>
+      <Product>
+        <DisplayName>STEP 7 Professional</DisplayName>
+        <DisplayVersion>V17</DisplayVersion>
+      </Product>
+      <OptionPackage>
+        <DisplayName>STEP 7 Safety</DisplayName>
+        <DisplayVersion>V17</DisplayVersion>
+      </OptionPackage>
+      <Product>
+        <DisplayName>WinCC Professional</DisplayName>
+        <DisplayVersion>V17</DisplayVersion>
+      </Product>
+    </InstalledProducts>
+  </DocumentInfo>
+  <SW.Blocks.FC ID="0">
+    <AttributeList>
+      <AutoNumber>false</AutoNumber>
+      <HeaderAuthor />
+      <HeaderFamily />
+      <HeaderName />
+      <HeaderVersion>0.1</HeaderVersion>
+      <Interface><Sections xmlns="http://www.siemens.com/automation/Openness/SW/Interface/v5">
+  <Section Name="Input" />
+  <Section Name="Output" />
+  <Section Name="InOut" />
+  <Section Name="Temp">
+    <Member Name="cycle_start" Datatype="Bool" />
+  </Section>
+  <Section Name="Constant" />
+  <Section Name="Return">
+    <Member Name="Ret_Val" Datatype="Void" Accessibility="Public" />
+  </Section>
+</Sections></Interface>
+      <IsIECCheckEnabled>false</IsIECCheckEnabled>
+      <MemoryLayout>Optimized</MemoryLayout>
+      <Name>CORRECTION_SCALE</Name>
+      <Number>4</Number>
+      <ProgrammingLanguage>LAD</ProgrammingLanguage>
+      <SetENOAutomatically>false</SetENOAutomatically>
+      <UDABlockProperties />
+      <UDAEnableTagReadback>false</UDAEnableTagReadback>
+    </AttributeList>
+    <ObjectList>
+      <MultilingualText ID="1" CompositionName="Comment">
+        <ObjectList>
+          <MultilingualTextItem ID="2" CompositionName="Items">
+            <AttributeList>
+              <Culture>en-US</Culture>
+              <Text />
+            </AttributeList>
+          </MultilingualTextItem>
+        </ObjectList>
+      </MultilingualText>
+      <SW.Blocks.CompileUnit ID="3" CompositionName="CompileUnits">
+        <AttributeList>
+          <NetworkSource><FlgNet xmlns="http://www.siemens.com/automation/Openness/SW/NetworkSource/FlgNet/v4">
+  <Parts>
+    <Access Scope="GlobalVariable" UId="21">
+      <Symbol>
+        <Component Name="Correction_Stopper_sensor" />
+      </Symbol>
+    </Access>
+    <Access Scope="GlobalVariable" UId="22">
+      <Symbol>
+        <Component Name="Correction_Lift_sensor" />
+      </Symbol>
+    </Access>
+    <Access Scope="GlobalVariable" UId="23">
+      <Symbol>
+        <Component Name="Correction_Jammer_sensor" />
+      </Symbol>
+    </Access>
+    <Access Scope="GlobalVariable" UId="24">
+      <Symbol>
+        <Component Name="Correction_Start_PB" />
+      </Symbol>
+    </Access>
+    <Access Scope="GlobalVariable" UId="25">
+      <Symbol>
+        <Component Name="Correction_Reset_PB" />
+      </Symbol>
+    </Access>
+    <Access Scope="GlobalVariable" UId="26">
+      <Symbol>
+        <Component Name="LPG_CORRECTION_scale_FB_DB" />
+        <Component Name="OUT_Decision" />
+      </Symbol>
+    </Access>
+    <Access Scope="GlobalVariable" UId="27">
+      <Symbol>
+        <Component Name="LPG_CORRECTION_scale_FB_DB" />
+        <Component Name="ALL_FILL_DONE" />
+      </Symbol>
+    </Access>
+    <Access Scope="GlobalVariable" UId="28">
+      <Symbol>
+        <Component Name="Correction_Stopper_solenoid" />
+      </Symbol>
+    </Access>
+    <Access Scope="GlobalVariable" UId="29">
+      <Symbol>
+        <Component Name="Correction_Lift_solenoid" />
+      </Symbol>
+    </Access>
+    <Access Scope="LocalVariable" UId="30">
+      <Symbol>
+        <Component Name="cycle_start" />
+      </Symbol>
+    </Access>
+    <Call UId="31">
+      <CallInfo Name="CORRECTION_scale_LPG" BlockType="FB">
+        <Instance Scope="GlobalVariable" UId="32">
+          <Component Name="CORRECTION_scale_LPG_DB" />
+        </Instance>
+        <Parameter Name="Stopper_sesnor" Section="Input" Type="Bool" />
+        <Parameter Name="Cylinder_presence" Section="Input" Type="Bool" />
+        <Parameter Name="Anti_jammer" Section="Input" Type="Bool" />
+        <Parameter Name="Start_cycle" Section="Input" Type="Bool" />
+        <Parameter Name="Reset_Cycle" Section="Input" Type="Bool" />
+        <Parameter Name="Result" Section="Input" Type="Int" />
+        <Parameter Name="all_fill_done" Section="Input" Type="Bool" />
+        <Parameter Name="Stopper" Section="Output" Type="Bool" />
+        <Parameter Name="LiftTable" Section="Output" Type="Bool" />
+        <Parameter Name="Start_correction_Scale" Section="Output" Type="Bool" />
+        <Parameter Name="Divider" Section="Output" Type="Bool" />
+      </CallInfo>
+    </Call>
+  </Parts>
+  <Wires>
+    <Wire UId="34">
+      <Powerrail />
+      <NameCon UId="31" Name="en" />
+    </Wire>
+    <Wire UId="35">
+      <IdentCon UId="21" />
+      <NameCon UId="31" Name="Stopper_sesnor" />
+    </Wire>
+    <Wire UId="36">
+      <IdentCon UId="22" />
+      <NameCon UId="31" Name="Cylinder_presence" />
+    </Wire>
+    <Wire UId="37">
+      <IdentCon UId="23" />
+      <NameCon UId="31" Name="Anti_jammer" />
+    </Wire>
+    <Wire UId="38">
+      <IdentCon UId="24" />
+      <NameCon UId="31" Name="Start_cycle" />
+    </Wire>
+    <Wire UId="39">
+      <IdentCon UId="25" />
+      <NameCon UId="31" Name="Reset_Cycle" />
+    </Wire>
+    <Wire UId="40">
+      <IdentCon UId="26" />
+      <NameCon UId="31" Name="Result" />
+    </Wire>
+    <Wire UId="41">
+      <IdentCon UId="27" />
+      <NameCon UId="31" Name="all_fill_done" />
+    </Wire>
+    <Wire UId="42">
+      <NameCon UId="31" Name="Stopper" />
+      <IdentCon UId="28" />
+    </Wire>
+    <Wire UId="43">
+      <NameCon UId="31" Name="LiftTable" />
+      <IdentCon UId="29" />
+    </Wire>
+    <Wire UId="44">
+      <NameCon UId="31" Name="Start_correction_Scale" />
+      <IdentCon UId="30" />
+    </Wire>
+    <Wire UId="45">
+      <NameCon UId="31" Name="Divider" />
+      <OpenCon UId="33" />
+    </Wire>
+  </Wires>
+</FlgNet></NetworkSource>
+          <ProgrammingLanguage>LAD</ProgrammingLanguage>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="4" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="5" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+          <MultilingualText ID="6" CompositionName="Title">
+            <ObjectList>
+              <MultilingualTextItem ID="7" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Blocks.CompileUnit>
+      <SW.Blocks.CompileUnit ID="8" CompositionName="CompileUnits">
+        <AttributeList>
+          <NetworkSource><FlgNet xmlns="http://www.siemens.com/automation/Openness/SW/NetworkSource/FlgNet/v4">
+  <Parts>
+    <Access Scope="GlobalVariable" UId="21">
+      <Symbol>
+        <Component Name="Correction_Lift_sensor" />
+      </Symbol>
+    </Access>
+    <Access Scope="GlobalVariable" UId="22">
+      <Symbol>
+        <Component Name="CORRECTION_scale_LPG_DB" />
+        <Component Name="Start_correction_Scale" />
+      </Symbol>
+    </Access>
+    <Access Scope="GlobalVariable" UId="23">
+      <Symbol>
+        <Component Name="MASTER_FILL_DATA" />
+        <Component Name="CORRECTION_SCALE" />
+        <Component Name="FILL_SEQ_IN" />
+        <Component Name="Reset_Seq" />
+      </Symbol>
+    </Access>
+    <Access Scope="GlobalVariable" UId="24">
+      <Symbol>
+        <Component Name="CylinderSetup_DB" />
+        <Component Name="Array_S2" AccessModifier="Array">
+          <Access Scope="LiteralConstant">
+            <Constant>
+              <ConstantType>DInt</ConstantType>
+              <ConstantValue>1</ConstantValue>
+            </Constant>
+          </Access>
+        </Component>
+        <Component Name="iCylinderType" />
+      </Symbol>
+    </Access>
+    <Access Scope="GlobalVariable" UId="25">
+      <Symbol>
+        <Component Name="CylinderSetup_DB" />
+        <Component Name="Array_S2" AccessModifier="Array">
+          <Access Scope="LiteralConstant">
+            <Constant>
+              <ConstantType>DInt</ConstantType>
+              <ConstantValue>1</ConstantValue>
+            </Constant>
+          </Access>
+        </Component>
+        <Component Name="rTareWeight" />
+      </Symbol>
+    </Access>
+    <Access Scope="GlobalVariable" UId="26">
+      <Symbol>
+        <Component Name="Correction_Jammer_sensor" />
+      </Symbol>
+    </Access>
+    <Access Scope="GlobalVariable" UId="27">
+      <Symbol>
+        <Component Name="MASTER_TCP_DATA" />
+        <Component Name="CORRECTION_SCALE" />
+      </Symbol>
+    </Access>
+    <Access Scope="GlobalVariable" UId="28">
+      <Symbol>
+        <Component Name="MASTER_FILL_DATA" />
+        <Component Name="CORRECTION_SCALE" />
+        <Component Name="FILL_SEQ_OUT" />
+        <Component Name="Filled_Dat" />
+      </Symbol>
+    </Access>
+    <Access Scope="GlobalVariable" UId="29">
+      <Symbol>
+        <Component Name="MASTER_FILL_DATA" />
+        <Component Name="CORRECTION_SCALE" />
+        <Component Name="FILL_SEQ_OUT" />
+        <Component Name="Step_No" />
+      </Symbol>
+    </Access>
+    <Access Scope="GlobalVariable" UId="30">
+      <Symbol>
+        <Component Name="CylinderSetup_DB" />
+        <Component Name="Array_S2" AccessModifier="Array">
+          <Access Scope="LiteralConstant">
+            <Constant>
+              <ConstantType>DInt</ConstantType>
+              <ConstantValue>1</ConstantValue>
+            </Constant>
+          </Access>
+        </Component>
+        <Component Name="rGross_Weight" />
+      </Symbol>
+    </Access>
+    <Access Scope="GlobalVariable" UId="31">
+      <Symbol>
+        <Component Name="CylinderSetup_DB" />
+        <Component Name="Array_S2" AccessModifier="Array">
+          <Access Scope="LiteralConstant">
+            <Constant>
+              <ConstantType>DInt</ConstantType>
+              <ConstantValue>1</ConstantValue>
+            </Constant>
+          </Access>
+        </Component>
+        <Component Name="rNet_weight" />
+      </Symbol>
+    </Access>
+    <Call UId="32">
+      <CallInfo Name="LPG_CORRECTION_scale_FB" BlockType="FB">
+        <Instance Scope="GlobalVariable" UId="33">
+          <Component Name="LPG_CORRECTION_scale_FB_DB" />
+        </Instance>
+        <Parameter Name="INxCylinder_In_Pos" Section="Input" Type="Bool" />
+        <Parameter Name="INxAuto_Start_Seq" Section="Input" Type="Bool" />
+        <Parameter Name="INxMan_Start_Seq" Section="Input" Type="Bool" />
+        <Parameter Name="INxStop_Sequence" Section="Input" Type="Bool" />
+        <Parameter Name="INtStart_TImeout_Time" Section="Input" Type="DInt" />
+        <Parameter Name="INxReset_Sequence" Section="Input" Type="Bool" />
+        <Parameter Name="INxCylinder_Type" Section="Input" Type="Int" />
+        <Parameter Name="INrTare_Entry_SP" Section="Input" Type="Real" />
+        <Parameter Name="DOWN_CONVEYOR" Section="Input" Type="Bool" />
+        <Parameter Name="OutuFilled_Data" Section="Output" Type="Array[1..3] of Real" />
+        <Parameter Name="OutxDomestic_Cylinder" Section="Output" Type="Bool" />
+        <Parameter Name="OutxCommercial_Cylinder" Section="Output" Type="Bool" />
+        <Parameter Name="OutxStart_Timeout" Section="Output" Type="Bool" />
+        <Parameter Name="OutxTare_Entry_Error" Section="Output" Type="Bool" />
+        <Parameter Name="Outx_Filling_Error" Section="Output" Type="Bool" />
+        <Parameter Name="Outx_Tare_Value_Error" Section="Output" Type="Bool" />
+        <Parameter Name="Cycle_Started" Section="Output" Type="Bool" />
+        <Parameter Name="OutiStep_No" Section="Output" Type="Int" />
+        <Parameter Name="OUTxResult" Section="Output" Type="Bool" />
+        <Parameter Name="Gross_Weight" Section="Output" Type="Real" />
+        <Parameter Name="Net_Wieght" Section="Output" Type="Real" />
+        <Parameter Name="Tare_Weight" Section="Output" Type="Real" />
+        <Parameter Name="OUT_Decision" Section="Output" Type="Int" />
+        <Parameter Name="Modbus_Master_DB" Section="InOut" Type="&quot;MOD_MASTER_DATA_1&quot;" />
+      </CallInfo>
+    </Call>
+  </Parts>
+  <Wires>
+    <Wire UId="47">
+      <Powerrail />
+      <NameCon UId="32" Name="en" />
+    </Wire>
+    <Wire UId="48">
+      <IdentCon UId="21" />
+      <NameCon UId="32" Name="INxCylinder_In_Pos" />
+    </Wire>
+    <Wire UId="49">
+      <IdentCon UId="22" />
+      <NameCon UId="32" Name="INxAuto_Start_Seq" />
+    </Wire>
+    <Wire UId="50">
+      <OpenCon UId="34" />
+      <NameCon UId="32" Name="INxMan_Start_Seq" />
+    </Wire>
+    <Wire UId="51">
+      <OpenCon UId="35" />
+      <NameCon UId="32" Name="INxStop_Sequence" />
+    </Wire>
+    <Wire UId="52">
+      <OpenCon UId="36" />
+      <NameCon UId="32" Name="INtStart_TImeout_Time" />
+    </Wire>
+    <Wire UId="53">
+      <IdentCon UId="23" />
+      <NameCon UId="32" Name="INxReset_Sequence" />
+    </Wire>
+    <Wire UId="54">
+      <IdentCon UId="24" />
+      <NameCon UId="32" Name="INxCylinder_Type" />
+    </Wire>
+    <Wire UId="55">
+      <IdentCon UId="25" />
+      <NameCon UId="32" Name="INrTare_Entry_SP" />
+    </Wire>
+    <Wire UId="56">
+      <IdentCon UId="26" />
+      <NameCon UId="32" Name="DOWN_CONVEYOR" />
+    </Wire>
+    <Wire UId="57">
+      <IdentCon UId="27" />
+      <NameCon UId="32" Name="Modbus_Master_DB" />
+    </Wire>
+    <Wire UId="58">
+      <NameCon UId="32" Name="OutuFilled_Data" />
+      <IdentCon UId="28" />
+    </Wire>
+    <Wire UId="59">
+      <NameCon UId="32" Name="OutxDomestic_Cylinder" />
+      <OpenCon UId="37" />
+    </Wire>
+    <Wire UId="60">
+      <NameCon UId="32" Name="OutxCommercial_Cylinder" />
+      <OpenCon UId="38" />
+    </Wire>
+    <Wire UId="61">
+      <NameCon UId="32" Name="OutxStart_Timeout" />
+      <OpenCon UId="39" />
+    </Wire>
+    <Wire UId="62">
+      <NameCon UId="32" Name="OutxTare_Entry_Error" />
+      <OpenCon UId="40" />
+    </Wire>
+    <Wire UId="63">
+      <NameCon UId="32" Name="Outx_Filling_Error" />
+      <OpenCon UId="41" />
+    </Wire>
+    <Wire UId="64">
+      <NameCon UId="32" Name="Outx_Tare_Value_Error" />
+      <OpenCon UId="42" />
+    </Wire>
+    <Wire UId="65">
+      <NameCon UId="32" Name="Cycle_Started" />
+      <OpenCon UId="43" />
+    </Wire>
+    <Wire UId="66">
+      <NameCon UId="32" Name="OutiStep_No" />
+      <IdentCon UId="29" />
+    </Wire>
+    <Wire UId="67">
+      <NameCon UId="32" Name="OUTxResult" />
+      <OpenCon UId="44" />
+    </Wire>
+    <Wire UId="68">
+      <NameCon UId="32" Name="Gross_Weight" />
+      <IdentCon UId="30" />
+    </Wire>
+    <Wire UId="69">
+      <NameCon UId="32" Name="Net_Wieght" />
+      <IdentCon UId="31" />
+    </Wire>
+    <Wire UId="70">
+      <NameCon UId="32" Name="Tare_Weight" />
+      <OpenCon UId="45" />
+    </Wire>
+    <Wire UId="71">
+      <NameCon UId="32" Name="OUT_Decision" />
+      <OpenCon UId="46" />
+    </Wire>
+  </Wires>
+</FlgNet></NetworkSource>
+          <ProgrammingLanguage>LAD</ProgrammingLanguage>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="9" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="A" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+          <MultilingualText ID="B" CompositionName="Title">
+            <ObjectList>
+              <MultilingualTextItem ID="C" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Blocks.CompileUnit>
+      <SW.Blocks.CompileUnit ID="D" CompositionName="CompileUnits">
+        <AttributeList>
+          <NetworkSource><FlgNet xmlns="http://www.siemens.com/automation/Openness/SW/NetworkSource/FlgNet/v4">
+  <Parts>
+    <Access Scope="GlobalVariable" UId="21">
+      <Symbol>
+        <Component Name="MOD_TCP_SETUP_DB" />
+        <Component Name="TCP_Data_CORRECTION_SCALE" />
+      </Symbol>
+    </Access>
+    <Access Scope="GlobalVariable" UId="22">
+      <Symbol>
+        <Component Name="MASTER_FILL_DATA" />
+        <Component Name="CORRECTION_SCALE" />
+      </Symbol>
+    </Access>
+    <Access Scope="GlobalVariable" UId="23">
+      <Symbol>
+        <Component Name="MASTER_FILL_DATA" />
+        <Component Name="CORRECTION_SCALE" />
+        <Component Name="FILL_SEQ_OUT" />
+        <Component Name="Modbus_Busy" />
+      </Symbol>
+    </Access>
+    <Call UId="24">
+      <CallInfo Name="TCP_CORRECTION_SCALE" BlockType="FB">
+        <Instance Scope="GlobalVariable" UId="25">
+          <Component Name="TCP_CORRECTION_SCALE_DB" />
+        </Instance>
+        <Parameter Name="Modbus_Busy" Section="Output" Type="Bool" />
+        <Parameter Name="Mod_TCP_Setup" Section="InOut" Type="&quot;Mod_TCP_Data&quot;" />
+        <Parameter Name="LPG_Fill_Data" Section="InOut" Type="&quot;LPG_FILL_DATA&quot;" />
+      </CallInfo>
+    </Call>
+  </Parts>
+  <Wires>
+    <Wire UId="26">
+      <Powerrail />
+      <NameCon UId="24" Name="en" />
+    </Wire>
+    <Wire UId="27">
+      <IdentCon UId="21" />
+      <NameCon UId="24" Name="Mod_TCP_Setup" />
+    </Wire>
+    <Wire UId="28">
+      <IdentCon UId="22" />
+      <NameCon UId="24" Name="LPG_Fill_Data" />
+    </Wire>
+    <Wire UId="29">
+      <NameCon UId="24" Name="Modbus_Busy" />
+      <IdentCon UId="23" />
+    </Wire>
+  </Wires>
+</FlgNet></NetworkSource>
+          <ProgrammingLanguage>LAD</ProgrammingLanguage>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="E" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="F" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+          <MultilingualText ID="10" CompositionName="Title">
+            <ObjectList>
+              <MultilingualTextItem ID="11" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Blocks.CompileUnit>
+      <SW.Blocks.CompileUnit ID="12" CompositionName="CompileUnits">
+        <AttributeList>
+          <NetworkSource />
+          <ProgrammingLanguage>LAD</ProgrammingLanguage>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="13" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="14" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+          <MultilingualText ID="15" CompositionName="Title">
+            <ObjectList>
+              <MultilingualTextItem ID="16" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Blocks.CompileUnit>
+      <MultilingualText ID="17" CompositionName="Title">
+        <ObjectList>
+          <MultilingualTextItem ID="18" CompositionName="Items">
+            <AttributeList>
+              <Culture>en-US</Culture>
+              <Text />
+            </AttributeList>
+          </MultilingualTextItem>
+        </ObjectList>
+      </MultilingualText>
+    </ObjectList>
+  </SW.Blocks.FC>
+</Document>

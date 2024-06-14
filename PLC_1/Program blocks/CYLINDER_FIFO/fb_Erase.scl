@@ -1,0 +1,26 @@
+﻿FUNCTION_BLOCK "fb_Erase"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR_INPUT 
+      INxErase : Bool;
+   END_VAR
+
+   VAR_IN_OUT 
+      IOsFIFO_IN : Array[1..100] of "uCylinderData";
+   END_VAR
+
+   VAR 
+      sEmpty { S7_SetPoint := 'False'} : "uCylinderData";
+      idx1 { S7_SetPoint := 'True'} : Int;
+   END_VAR
+
+
+BEGIN
+	IF #INxErase THEN
+	    FOR #idx1 := 1 TO 50 - 1 DO
+	        #IOsFIFO_IN[#idx1] := #sEmpty;
+	    END_FOR;
+	END_IF;
+	
+END_FUNCTION_BLOCK
+

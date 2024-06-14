@@ -1,0 +1,27 @@
+﻿FUNCTION_BLOCK "fb_Compress"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR_IN_OUT 
+      IOsFIFO_IN : Array[1..50] of "uCylinderData";
+   END_VAR
+
+   VAR 
+      sEmpty { S7_SetPoint := 'False'} : "uCylinderData";
+      idx1 { S7_SetPoint := 'True'} : Int;
+   END_VAR
+
+
+BEGIN
+	FOR #idx1 := 1 TO 50 - 1 DO
+	    IF #idx1 <= 0 THEN
+	        EXIT;
+	    END_IF;
+	    // Shift down FiFo by one
+	    IF #IOsFIFO_IN[#idx1].rCylinderID = 0.0 AND
+	        #IOsFIFO_IN[#idx1 + 1].rCylinderID <> 0.0 THEN
+	        #IOsFIFO_IN[#idx1] := #IOsFIFO_IN[#idx1 + 1];
+	        #IOsFIFO_IN[#idx1 + 1] := #sEmpty;
+	    END_IF;
+	END_FOR;
+END_FUNCTION_BLOCK
+
